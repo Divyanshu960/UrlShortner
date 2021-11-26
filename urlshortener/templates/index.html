@@ -1,0 +1,120 @@
+<head>
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <style>
+        *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Helvetica", sans-serif;
+  line-height: 1.5;
+  color: #111;
+  background-image: url('https://images.hdqwalls.com/download/kimetsu-no-yaiba-anime-4k-yn-1440x900.jpg');
+}
+
+main {
+  max-width: 720px;
+  width: 100%;
+  border: 2.5px solid #1d82bd7c;
+  border-radius: 2.5px;
+  box-shadow: 0 10px 20px rgba(17, 17, 17, 0.125),
+    0 5px 5px rgba(17, 17, 17, 0.25);
+  background-image: linear-gradient(to top, #30d0d073 0%, #2a065575 100%);
+}
+
+h1 {
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.795);
+}
+h2 {
+  padding: 1rem;
+  color: rgba(0, 255, 255, 0.815);
+  text-align: right;
+}
+p {
+  padding: 1rem;
+  font-size: 0.875em;
+  color: rgb(223, 248, 250);
+  text-align: left;
+}
+input,
+button {
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: 0;
+  padding: 1rem;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+}
+
+button {
+  cursor: pointer;
+  flex: 1;
+  font-size: 1.25em;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+section {
+  min-height: 120px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.336);
+}
+
+    </style>
+</head>
+<main>
+  <h1>URL Shortener</h1>
+  <h2>Made by-Divyanshu Chaurasiya</h2>
+  <p>Be sure to exclude "https://" after pasting your link.</p>
+  <form id="post-form">
+    {% csrf_token %}
+  <input type="text" name="link" id="link" placeholder="Enter URL here">
+  <div class="buttons">
+    <button type="submit" id="shorten">Shorten</button>
+  </div>
+  </form>
+  
+  <section id="section"><h3></h3></section>
+    
+</main>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/create',
+      data:{
+        link:$('#link').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('h3').html("shorturldivz.herokuapp.com/"+data)
+      }
+    });
+  });
+</script>
